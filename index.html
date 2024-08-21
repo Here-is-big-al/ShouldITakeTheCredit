@@ -52,14 +52,15 @@ which can no longer be accessed except by archive.
                         let reqGet = new XMLHttpRequest();
                         
                         reqGet.open("GET",
-                                "https://api.jsonbin.io/v3/b/66c66d03e41b4d34e4237098/latest", true);
+                                "https://api.jsonbin.io/v3/b/66c66d03e41b4d34e4237098/latest", false);
                         reqGet.setRequestHeader("X-Access-Key",
                                 "$2a$10$BtIALYSJe35FOhPQGvp4L.eVXKf5BqmEnduaaNnkXuq0m83.Fc4eO");
                         reqGet.send();
                         
                         
+                        console.log(reqGet);
                         
-                        reqGetObj = JSON.parse(reqGet.response);
+                        reqGetObj = JSON.parse(reqGet.responseText);
                         
                         console.log(reqGet);
                         console.log(reqGetObj);
