@@ -57,8 +57,11 @@ which can no longer be accessed except by archive.
                                 "$2a$10$BtIALYSJe35FOhPQGvp4L.eVXKf5BqmEnduaaNnkXuq0m83.Fc4eO");
                         reqGet.send();
                         
+                        reqGetObj = JSON.parse(reqGet.responseText);
+                        
                         console.log(reqGet);
-                        console.log(reqGet.record["shoulditakethecredit.org_views"]);
+                        console.log(reqGetObj);
+                        console.log(reqGetObj.record["shoulditakethecredit.org_views"]);
                         console.log("Counter incremented.");
                         
                         //let req = new XMLHttpRequest();
