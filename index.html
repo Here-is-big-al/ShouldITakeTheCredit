@@ -57,7 +57,9 @@ which can no longer be accessed except by archive.
                                 "$2a$10$BtIALYSJe35FOhPQGvp4L.eVXKf5BqmEnduaaNnkXuq0m83.Fc4eO");
                         reqGet.send();
                         
-                        reqGetObj = JSON.parse(reqGet.responseText);
+                        
+                        
+                        reqGetObj = JSON.parse(reqGet.response);
                         
                         console.log(reqGet);
                         console.log(reqGetObj);
