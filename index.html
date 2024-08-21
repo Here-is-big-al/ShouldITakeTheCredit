@@ -49,7 +49,22 @@ which can no longer be accessed except by archive.
                 if(data.ip.toString().trim() == "71.234.131.248") {
                     console.log("Counter not incremented.");
                 } else {
+                    
+                    let reqGet = new XMLHttpRequest();
+                    
+                    reqGet.open("GET",
+                            "https://api.jsonbin.io/v3/b/66c66d03e41b4d34e4237098/latest", true);
+                    reqGet.setRequestHeader("X-Access-Key",
+                            "$2a$10$BtIALYSJe35FOhPQGvp4L.eVXKf5BqmEnduaaNnkXuq0m83.Fc4eO");
+                    req.send();
+                    
+                    console.log("Received " + reqGet);
                     console.log("Counter incremented.");
+                    
+                    //let req = new XMLHttpRequest();
+                    
+                    //req.open("PUT")
+                    
                     //$2a$10$BtIALYSJe35FOhPQGvp4L.eVXKf5BqmEnduaaNnkXuq0m83.Fc4eO
                 }
             })
