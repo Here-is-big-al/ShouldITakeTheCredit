@@ -62,14 +62,30 @@ which can no longer be accessed except by archive.
                         
                         reqGetObj = JSON.parse(reqGet.responseText);
                         
+                        
                         console.log(reqGet);
                         console.log(reqGetObj);
                         console.log(reqGetObj.record["shoulditakethecredit.org_views"]);
+                        
+                        currViews = reqGetObj.record["shoulditakethecredit.org_views"];
+                        console.log(currViews);
+                        currViews += 1;
+                        console.log(currViews)
                         console.log("Counter incremented.");
                         
-                        //let req = new XMLHttpRequest();
+                        //update
+                        let req = new XMLHttpRequest();
                         
-                        //req.open("PUT")
+                        req.open("PUT", "https://api.jsonbin.io/v3/b/66c66d03e41b4d34e4237098", false);
+                        
+                        req.setRequestHeader("Content-Type", "application/json");
+                        
+                        req.setRequestHeader("X-Access-Key",
+                                "$2a$10$BtIALYSJe35FOhPQGvp4L.eVXKf5BqmEnduaaNnkXuq0m83.Fc4eO");
+                        
+                        sendText = '{"shoulditakethecredit.org_views": ' + (currViews + 1) + '}';
+                        
+                        req.send(sendText);
                         
                         //$2a$10$BtIALYSJe35FOhPQGvp4L.eVXKf5BqmEnduaaNnkXuq0m83.Fc4eO
                     }
