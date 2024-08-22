@@ -46,7 +46,8 @@ which can no longer be accessed except by archive.
                 .then(response => response.json())
                 .then(data => {
                     address = data.ip.toString().trim();
-                    if(data.ip.toString().trim() == "71.234.131.248") {
+                    console.log(address);
+                    if(address == "71.234.131.248") {
                         console.log("Counter not incremented.");
                     } else {
                         
@@ -103,7 +104,44 @@ which can no longer be accessed except by archive.
                                 "$2a$10$BtIALYSJe35FOhPQGvp4L.eVXKf5BqmEnduaaNnkXuq0m83.Fc4eO");
                         
                         sendText = '{"shoulditakethecredit.org_views": ' + currViews + '}';
+                        sendText = reqGet.responseText;
+                        console.log("OG send text");
+                        console.log(sendText);
                         
+                        idxOfMetaStart = sendText.indexOf(',"meta');
+                        
+                        sendText = sendText.substring(10,idxOfMetaStart);
+                        
+                        console.log("new send text");
+                        console.log(sendText);
+                        
+                        idxOfViews = sendText.indexOf('s":') + 3;
+                        idxOfMoreStart = sendText.indexOf(',"more');
+                        console.log('idxOfMoreStart' + idxOfMoreStart);
+                        //idxOfRecEnd = sendText.indexOf(']},"meta');
+                        //console.log('idxOfRecEnd' + idxOfRecEnd);
+                        
+                        console.log('idxofmore to idxofrec text next line');
+                        console.log(sendText.substring(idxOfMoreStart,sendText.length-2));
+                        
+                        //idxChangeBefore = sendText.indexOf(',');
+                        
+                        //idxChangeAfter = sendText.indexOf('"should');
+                        sendText = sendText.substring(0,idxOfViews) + currViews
+                                + sendText.substring(idxOfMoreStart,sendText.length-2)
+                                + ',{"user":' + currViews
+                                + ',"time":' + currTime.responseText
+                                + ',"address":"' + address + '"}]}';
+                        
+                        /*
+                        sendText = '{\n\t' + sendText.substring(idxChangeAfter, sendText.length);
+                        sendText = sendText.substring(0,37) + currViews
+                                + sendText.substring(idxChangeBefore, sendText.length)
+                                + ',\n\t\t\t"user": ' + currViews + ',\n\t\t\t'
+                                + '"time:"' + currTime.responseText + ',\n'
+                                + '\t\t\t"address: ' + address + '\n\t\t}\n\t]\n}';*/
+                        console.log("SendText next line")
+                        console.log(sendText);
                         /*
                         {
                             "shoulditakethecredit.org_views": 0,
@@ -153,7 +191,6 @@ which can no longer be accessed except by archive.
                         sendText = reqGet.responseText;
                         
                         
-                        req.send(sendText);
                         
                         return true;
                         
