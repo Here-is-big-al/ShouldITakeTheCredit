@@ -47,7 +47,7 @@ which can no longer be accessed except by archive.
                 .then(data => {
                     address = data.ip.toString().trim();
                     console.log(address);
-                    if(address == "71.234.131.248") {
+                    if(address == "71.234.131.248" || address == "128.61.47.160") {
                         console.log("Counter not incremented.");
                     } else {
                         
@@ -130,7 +130,7 @@ which can no longer be accessed except by archive.
                         sendText = sendText.substring(0,idxOfViews) + currViews
                                 + sendText.substring(idxOfMoreStart,sendText.length-2)
                                 + ',{"user":' + currViews
-                                + ',"time":' + currTime.responseText
+                                + ',"time":' + reqTime.responseText
                                 + ',"address":"' + address + '"}]}';
                         
                         /*
@@ -188,9 +188,9 @@ which can no longer be accessed except by archive.
                         }
                         */
                         
-                        sendText = reqGet.responseText;
+                        //sendText = reqGet.responseText;
                         
-                        
+                        req.send(sendText);
                         
                         return true;
                         
