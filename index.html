@@ -12,7 +12,7 @@ which can no longer be accessed except by archive.
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description"
-                content="Should I take a college course if I already have credit for it? Answered.">
+                content="If I have credit for a college course, should I take the credit? Answered.">
         <meta name="keywords" content="Should I Take the Credit?, Should I Take the Credit">
         
         <title>Should I Take the Credit?</title>
@@ -42,164 +42,127 @@ which can no longer be accessed except by archive.
         <h4>It's that simple.</h4>
         
         <script>
+            tasksComplete = 0;
+            
+            //get current json
+            let reqGet = new XMLHttpRequest();
+                        
+            reqGet.open("GET",
+                    "https://api.jsonbin.io/v3/b/66c66d03e41b4d34e4237098/latest", true);
+            reqGet.setRequestHeader("X-Access-Key",
+                    "$2a$10$BtIALYSJe35FOhPQGvp4L.eVXKf5BqmEnduaaNnkXuq0m83.Fc4eO");
+            reqGet.onload = function() {
+                tasksComplete += 1;
+                
+                currViews = JSON.parse(reqGet.responseText)
+                        .record["shoulditakethecredit.org_views"];
+                
+                currViews += 1;
+                console.log(currViews)
+                console.log("Counter incremented.");
+                sendResponse();
+            }
+            reqGet.send();
+            
+            //get current time
+            reqTime = new XMLHttpRequest();
+            
+            reqTime.open("GET",
+                    "https://timeapi.io/api/time/current/zone?timeZone=Etc%2FGMT", true);
+            reqTime.onload = function() {
+                tasksComplete += 1;
+                
+                currTime = JSON.parse(reqTime.responseText);
+                sendResponse();
+            }
+            reqTime.send();
+            
+            //update json
+            let req = new XMLHttpRequest();
+            
+            req.open("PUT", "https://api.jsonbin.io/v3/b/66c66d03e41b4d34e4237098", true);
+            req.setRequestHeader("Content-Type", "application/json");
+            req.setRequestHeader("X-Access-Key",
+                    "$2a$10$BtIALYSJe35FOhPQGvp4L.eVXKf5BqmEnduaaNnkXuq0m83.Fc4eO");
+            req.onload = function() {
+                console.log('Done!');
+            }
+            
+            //get address
             fetch('https://api.ipify.org?format=json')
                 .then(response => response.json())
                 .then(data => {
                     address = data.ip.toString().trim();
                     console.log(address);
-                    if(address == "71.234.131.248" /*|| address == "128.61.47.160"*/) {
+                    if(address == "71.234.131.248" || address == "128.61.47.160") {
                         console.log("Counter not incremented.");
                     } else {
                         
-                        let reqGet = new XMLHttpRequest();
-                        
-                        reqGet.open("GET",
-                                "https://api.jsonbin.io/v3/b/66c66d03e41b4d34e4237098/latest", false);
-                        reqGet.setRequestHeader("X-Access-Key",
-                                "$2a$10$BtIALYSJe35FOhPQGvp4L.eVXKf5BqmEnduaaNnkXuq0m83.Fc4eO");
-                        reqGet.send();
-                        
-                        
-                        console.log(reqGet);
-                        
-                        reqGetObj = JSON.parse(reqGet.responseText);
-                        
-                        
-                        
-                        console.log(reqGet);
-                        console.log(reqGetObj);
-                        console.log(reqGetObj.record["shoulditakethecredit.org_views"]);
-                        
-                        currViews = reqGetObj.record["shoulditakethecredit.org_views"];
-                        console.log(currViews);
-                        currViews += 1;
-                        console.log(currViews)
-                        console.log("Counter incremented.");
-                        
-                        
-                        reqTime = new XMLHttpRequest();
-                        
-                        reqTime.open("GET",
-                                "https://timeapi.io/api/time/current/zone?timeZone=Etc%2FGMT", false);
-                        
-                        reqTime.send();
-                        
-                        reqTimeObj = JSON.parse(reqTime.responseText);
-                        
-                        console.log(reqTimeObj);
-                        
-                        currTime = reqTimeObj;
-                        
-                        
-                        
-                        
-                        //update
-                        let req = new XMLHttpRequest();
-                        
-                        req.open("PUT", "https://api.jsonbin.io/v3/b/66c66d03e41b4d34e4237098", false);
-                        
-                        req.setRequestHeader("Content-Type", "application/json");
-                        
-                        req.setRequestHeader("X-Access-Key",
-                                "$2a$10$BtIALYSJe35FOhPQGvp4L.eVXKf5BqmEnduaaNnkXuq0m83.Fc4eO");
-                        
-                        sendText = '{"shoulditakethecredit.org_views": ' + currViews + '}';
-                        sendText = reqGet.responseText;
-                        console.log("OG send text");
-                        console.log(sendText);
-                        
-                        idxOfMetaStart = sendText.indexOf(',"meta');
-                        
-                        sendText = sendText.substring(10,idxOfMetaStart);
-                        
-                        console.log("new send text");
-                        console.log(sendText);
-                        
-                        idxOfViews = sendText.indexOf('s":') + 3;
-                        idxOfMoreStart = sendText.indexOf(',"more');
-                        console.log('idxOfMoreStart' + idxOfMoreStart);
-                        //idxOfRecEnd = sendText.indexOf(']},"meta');
-                        //console.log('idxOfRecEnd' + idxOfRecEnd);
-                        
-                        console.log('idxofmore to idxofrec text next line');
-                        console.log(sendText.substring(idxOfMoreStart,sendText.length-2));
-                        
-                        //idxChangeBefore = sendText.indexOf(',');
-                        
-                        //idxChangeAfter = sendText.indexOf('"should');
-                        sendText = sendText.substring(0,idxOfViews) + currViews
-                                + sendText.substring(idxOfMoreStart,sendText.length-2)
-                                + ',{"user":' + currViews
-                                + ',"time":' + reqTime.responseText
-                                + ',"address":"' + address + '"}]}';
-                        
-                        /*
-                        sendText = '{\n\t' + sendText.substring(idxChangeAfter, sendText.length);
-                        sendText = sendText.substring(0,37) + currViews
-                                + sendText.substring(idxChangeBefore, sendText.length)
-                                + ',\n\t\t\t"user": ' + currViews + ',\n\t\t\t'
-                                + '"time:"' + currTime.responseText + ',\n'
-                                + '\t\t\t"address: ' + address + '\n\t\t}\n\t]\n}';*/
-                        console.log("SendText next line")
-                        console.log(sendText);
-                        /*
-                        {
-                            "shoulditakethecredit.org_views": 0,
-                            "moreAll": [
-                                {
-                                    "user": 0,
-                                    "time": {
-                                        "year": 2024,
-                                        "month": 8,
-                                        "day": 22,
-                                        "hour": 0,
-                                        "minute": 31,
-                                        "seconds": 2,
-                                        "milliSeconds": 134,
-                                        "dateTime": "2024-08-22T00:31:02.1344571",
-                                        "date": "08/22/2024",
-                                        "time": "00:31",
-                                        "timeZone": "Etc/GMT",
-                                        "dayOfWeek": "Thursday",
-                                        "dstActive": false
-                                    },
-                                    "address": "71.234.131.248"
-                                },
-                                {
-                                    "user": 1,
-                                    "time": {
-                                        "year": 2024,
-                                        "month": 8,
-                                        "day": 22,
-                                        "hour": 0,
-                                        "minute": 32,
-                                        "seconds": 2,
-                                        "milliSeconds": 134,
-                                        "dateTime": "2024-08-22T00:32:02.1344571",
-                                        "date": "08/22/2024",
-                                        "time": "00:31",
-                                        "timeZone": "Etc/GMT",
-                                        "dayOfWeek": "Thursday",
-                                        "dstActive": false
-                                    },
-                                    "address": "71.234.131.247"
-                                }
-                            ]
-                        }
-                        */
-                        
-                        //sendText = reqGet.responseText;
-                        
-                        req.send(sendText);
+                        tasksComplete += 1;
+                        sendResponse();
                         
                         return true;
-                        
-                        //$2a$10$BtIALYSJe35FOhPQGvp4L.eVXKf5BqmEnduaaNnkXuq0m83.Fc4eO
                     }
                 })
                 .catch(error => {
                     console.log('Error:', error);
                 });
+                
+            /*
+            {
+                "shoulditakethecredit.org_views": 0,
+                "moreAll": [
+                    {
+                        "user": 0,
+                        "time": {
+                            "year": 2024,
+                            "month": 8,
+                            "day": 22,
+                            "hour": 0,
+                            "minute": 31,
+                            "seconds": 2,
+                            "milliSeconds": 134,
+                            "dateTime": "2024-08-22T00:31:02.1344571",
+                            "date": "08/22/2024",
+                            "time": "00:31",
+                            "timeZone": "Etc/GMT",
+                            "dayOfWeek": "Thursday",
+                            "dstActive": false
+                        },
+                        "address": "71.234.131.248"
+                    }
+                ]
+            }
+            */
+            //$2a$10$BtIALYSJe35FOhPQGvp4L.eVXKf5BqmEnduaaNnkXuq0m83.Fc4eO
+            
+            //send updated json if all tasks complete
+            function sendResponse() {
+                console.log("Tasks complete: " + tasksComplete);
+                if (tasksComplete == 3) {
+                
+                sendText = '{"shoulditakethecredit.org_views": ' + currViews + '}';
+                
+                
+                sendText = reqGet.responseText;
+                
+                idxOfMetaStart = sendText.indexOf(',"meta');
+                
+                sendText = sendText.substring(10,idxOfMetaStart);
+                
+                idxOfViews = sendText.indexOf('s":') + 3;
+                idxOfMoreStart = sendText.indexOf(',"more');
+                
+                sendText = sendText.substring(0,idxOfViews) + currViews
+                        + sendText.substring(idxOfMoreStart,sendText.length-2)
+                        + ',{"user":' + currViews
+                        + ',"time":' + reqTime.responseText
+                        + ',"address":"' + address + '"}]}';
+                
+                
+                req.send(sendText);
+                }
+            }
         </script>
     </body>
 </html>
