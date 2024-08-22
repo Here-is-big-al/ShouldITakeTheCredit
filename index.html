@@ -45,6 +45,7 @@ which can no longer be accessed except by archive.
             fetch('https://api.ipify.org?format=json')
                 .then(response => response.json())
                 .then(data => {
+                    address = data.ip.toString().trim();
                     if(data.ip.toString().trim() == "71.234.131.248") {
                         console.log("Counter not incremented.");
                     } else {
@@ -63,6 +64,7 @@ which can no longer be accessed except by archive.
                         reqGetObj = JSON.parse(reqGet.responseText);
                         
                         
+                        
                         console.log(reqGet);
                         console.log(reqGetObj);
                         console.log(reqGetObj.record["shoulditakethecredit.org_views"]);
@@ -72,6 +74,23 @@ which can no longer be accessed except by archive.
                         currViews += 1;
                         console.log(currViews)
                         console.log("Counter incremented.");
+                        
+                        
+                        reqTime = new XMLHttpRequest();
+                        
+                        reqTime.open("GET",
+                                "https://timeapi.io/api/time/current/zone?timeZone=Etc%2FGMT", false);
+                        
+                        reqTime.send();
+                        
+                        reqTimeObj = JSON.parse(reqTime.responseText);
+                        
+                        console.log(reqTimeObj);
+                        
+                        currTime = reqTimeObj;
+                        
+                        
+                        
                         
                         //update
                         let req = new XMLHttpRequest();
@@ -83,9 +102,12 @@ which can no longer be accessed except by archive.
                         req.setRequestHeader("X-Access-Key",
                                 "$2a$10$BtIALYSJe35FOhPQGvp4L.eVXKf5BqmEnduaaNnkXuq0m83.Fc4eO");
                         
-                        sendText = '{"shoulditakethecredit.org_views": ' + (currViews + 1) + '}';
+                        sendText = '{"shoulditakethecredit.org_views": ' + currViews + '}';
+                        
                         
                         req.send(sendText);
+                        
+                        return true;
                         
                         //$2a$10$BtIALYSJe35FOhPQGvp4L.eVXKf5BqmEnduaaNnkXuq0m83.Fc4eO
                     }
