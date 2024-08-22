@@ -104,6 +104,54 @@ which can no longer be accessed except by archive.
                         
                         sendText = '{"shoulditakethecredit.org_views": ' + currViews + '}';
                         
+                        /*
+                        {
+                            "shoulditakethecredit.org_views": 0,
+                            "moreAll": [
+                                {
+                                    "user": 0,
+                                    "time": {
+                                        "year": 2024,
+                                        "month": 8,
+                                        "day": 22,
+                                        "hour": 0,
+                                        "minute": 31,
+                                        "seconds": 2,
+                                        "milliSeconds": 134,
+                                        "dateTime": "2024-08-22T00:31:02.1344571",
+                                        "date": "08/22/2024",
+                                        "time": "00:31",
+                                        "timeZone": "Etc/GMT",
+                                        "dayOfWeek": "Thursday",
+                                        "dstActive": false
+                                    },
+                                    "address": "71.234.131.248"
+                                },
+                                {
+                                    "user": 1,
+                                    "time": {
+                                        "year": 2024,
+                                        "month": 8,
+                                        "day": 22,
+                                        "hour": 0,
+                                        "minute": 32,
+                                        "seconds": 2,
+                                        "milliSeconds": 134,
+                                        "dateTime": "2024-08-22T00:32:02.1344571",
+                                        "date": "08/22/2024",
+                                        "time": "00:31",
+                                        "timeZone": "Etc/GMT",
+                                        "dayOfWeek": "Thursday",
+                                        "dstActive": false
+                                    },
+                                    "address": "71.234.131.247"
+                                }
+                            ]
+                        }
+                        */
+                        
+                        sendText = reqGet.responseText;
+                        
                         
                         req.send(sendText);
                         
