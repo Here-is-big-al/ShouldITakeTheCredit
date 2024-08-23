@@ -95,7 +95,8 @@ which can no longer be accessed except by archive.
                 .then((ipObj) => {
                     address = ipObj.ip;
                     console.log(ipObj.ip);
-                    if(address == "2610:148:1f00:2000:2034:a80b:ec91:5de5") {
+                    if(address == "2610:148:1f00:2000:2034:a80b:ec91:5de5"
+                            || address == "2610:148:1f00:2000:751c:d09a:224:90e") {
                         console.log("Counter not incremented.");
                     } else {
                         tasksComplete += 1;
